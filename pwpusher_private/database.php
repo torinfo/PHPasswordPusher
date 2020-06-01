@@ -164,7 +164,7 @@ function connectDB()
     
     try {
         // first connect to database with the PDO object. 
-        $db = new PDO('mysql:host=' . $host . ';dbname=' . $dbname . ';charset=utf8', ' . $dbuser . ', ' . $dbpass . ', [
+        $db = new PDO('mysql:host=' . $host . ';dbname=' . $dbname . ';charset=utf8', $dbuser, $dbpass, [
             PDO::ATTR_EMULATE_PREPARES => false, 
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
         ]); 
