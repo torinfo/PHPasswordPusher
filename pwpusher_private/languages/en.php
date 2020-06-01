@@ -31,6 +31,7 @@ $introduction ='You can use this form to securely send information to others. En
               the amount of time specified has passed or the link has been viewed the specified number of times, <strong>
               whichever comes first</strong>.';
 $linkErased = 'Link erased.';
+$linkNotErased = 'Link not found. Possibly already removed.';
 $logoutNavLink = 'Log Out';
 $minute = 'minute';
 $minutes = 'minutes';
