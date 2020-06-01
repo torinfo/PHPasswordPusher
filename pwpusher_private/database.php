@@ -107,7 +107,7 @@ function retrieveCred($id)
  *
  * @param PDO $db database connection instance
  *
- * @return none
+ * @return boolean defines whether the erasure was successful or not
  */
 function eraseExpired($db) 
 {
@@ -117,7 +117,7 @@ function eraseExpired($db)
         ' where xtime < UTC_TIMESTAMP() or xviews <= views';
     try{
         $statement = $db->prepare($query);
-        $statement->execute();
+        return $statement->execute() ? true : false;
     } catch (PDOException $e) {
         /** @noinspection PhpToStringImplementationInspection */
         print getError(translate('databaseErrorGeneric'));
@@ -131,7 +131,7 @@ function eraseExpired($db)
  *
  * @param string $id record to remove
  *
- * @return none
+ * @return boolean defines whether the erasure was successful or not
  */
 function eraseCred($id) 
 {
@@ -142,7 +142,7 @@ function eraseCred($id)
     try{
         $db = connectDB();
         $statement = $db->prepare($query);
-        $statement->execute($params);
+        return $statement->execute($params) ? true : false;
         /** @noinspection PhpToStringImplementationInspection */
         print getSuccess(translate('linkErased'));
     } catch (PDOException $e) {
