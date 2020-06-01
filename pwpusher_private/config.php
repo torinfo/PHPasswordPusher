@@ -27,13 +27,19 @@
     $key = 'changethiseddnc7o6gmhlz6df48z14z';
     
     //The salt for the link hash. Change it to something else secret.
-    $salt = 'change this salt please!'; 
+    $salt = 'change this salt please!';
+    
+    // The OpenSSL cypher to use for encrypting and decrypting credentials.
+    $cipher = 'aes-128-gcm';
+
+    // The OpenSSL tag length used for encrypting and decrypting credentials.
+    $tagLength = 16;
     
     //Require Apache user authentication.
-    $requireApacheAuth = false;  
+    $requireApacheAuth = false;
     
     //Require CAS user authentication. By default anyone can retrieve.
-    $requireCASAuth = false;  
+    $requireCASAuth = false;
     $casHost = 'cas.example.com';
     $casContext = '/cas';
     $casPort = 443;
