@@ -28,20 +28,22 @@ function correctKeySize()
 /**
  * Encrypt the credential.
  *
- * @param string $cred the credential to be encrypted
+ * @param string $plaintext the credential to be encrypted
  *
- * @return string $encrypted the encrypted string
+ * @return string $encrypted the openssl and base64 encrypted string
  */
 function encryptCred($plaintext) 
 {
     include 'config.php';
-    $algorithm = MCRYPT_RIJNDAEL_128;
-    $mode = MCRYPT_MODE_CBC;
-    $rand = MCRYPT_DEV_URANDOM;
-    $ivSize = mcrypt_get_iv_size($algorithm, $mode);
-    $iv = mcrypt_create_iv($ivSize, $rand);
-
-    return base64_encode($iv . mcrypt_encrypt($algorithm, $key, $plaintext, $mode, $iv));
+    
+    if (in_array($cipher, openssl_get_cipher_methods()))
+    {
+        $iv = bin2hex(random_bytes(openssl_cipher_iv_length($cipher)));
+        $tag = bin2hex(random_bytes($tagLength));
+        $ciphertext = openssl_encrypt($plaintext, $cipher, $key, $options=0, $iv, $tag);
+    }
+    
+    return base64_encode($iv . $tag . $ciphertext);
 }
 
 /**
@@ -54,15 +56,15 @@ function encryptCred($plaintext)
 function decryptCred($encoded) 
 {
     include 'config.php';
-    $algorithm = MCRYPT_RIJNDAEL_128;
-    $mode = MCRYPT_MODE_CBC;
-    $ivSize = mcrypt_get_iv_size($algorithm, $mode);
+    
+    $ivLength = strlen(bin2hex(random_bytes(openssl_cipher_iv_length($cipher))));
 
-    $decoded = base64_decode($encoded);
-    $ivDecoded = substr($decoded, 0, $ivSize);
-    $ciphertextDecoded = substr($decoded, $ivSize);
-
-    return mcrypt_decrypt($algorithm, $key, $ciphertextDecoded, $mode, $ivDecoded);
+    $decodedCred = base64_decode($ciphertext);
+    $iv = substr($decodedCred, 0, $ivLength);
+    $tag = substr($decodedCred, $ivLength, $tagLength);
+    $decodedCT = substr($decodedCred, $ivLength + $tagLength);
+    
+    return openssl_decrypt($decodedCT, $cipher, $key, $options=0, $iv, $tag);
 }
 
 
