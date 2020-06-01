@@ -117,7 +117,7 @@ function eraseExpired($db)
         ' where xtime < UTC_TIMESTAMP() or xviews <= views';
     try{
         $statement = $db->prepare($query);
-        return $statement->execute() ? true : false;
+        $statement->execute() ;
     } catch (PDOException $e) {
         /** @noinspection PhpToStringImplementationInspection */
         print getError(translate('databaseErrorGeneric'));
@@ -142,7 +142,12 @@ function eraseCred($id)
     try{
         $db = connectDB();
         $statement = $db->prepare($query);
-        return $statement->execute($params) ? true : false;
+        $statement->execute($params);        
+        if ($statement->rowCount() > 0) {
+            print getSuccess(translate('linkErased'));
+        } else {
+            print getWarning(translate('linkNotErased'));
+        }
         /** @noinspection PhpToStringImplementationInspection */
         print getSuccess(translate('linkErased'));
     } catch (PDOException $e) {
