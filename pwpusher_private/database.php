@@ -161,8 +161,16 @@ function eraseCred($id)
 function connectDB() 
 {
     include 'config.php';
-    $db = new PDO('mysql:dbname=' . $dbname . ';host='.$host, $dbuser, $dbpass)
-        or die('Connect Failed');
-    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    
+    try {
+        // first connect to database with the PDO object. 
+        $db = new PDO('mysql:host=' . $host . ';dbname=' . $dbname . ';charset=utf8', ' . $dbuser . ', ' . $dbpass . ', [
+            PDO::ATTR_EMULATE_PREPARES => false, 
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        ]); 
+    } catch(\PDOException $e){
+        echo "Error connecting to mysql: " . $e->getMessage();
+    }
+    
     return $db;
 }
