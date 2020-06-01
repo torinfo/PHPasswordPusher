@@ -117,7 +117,7 @@ function eraseExpired($db)
         ' where xtime < UTC_TIMESTAMP() or xviews <= views';
     try{
         $statement = $db->prepare($query);
-        $statement->execute() ;
+        $statement->execute();
     } catch (PDOException $e) {
         /** @noinspection PhpToStringImplementationInspection */
         print getError(translate('databaseErrorGeneric'));
