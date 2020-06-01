@@ -180,9 +180,7 @@ function sanitizeEmail($email)
     if (strlen($email) > 50 || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
         return false;
     } else {
-        $email = strip_tags($email);
-        $email = mysql_real_escape_string($email);
-        return $email;
+        return strip_tags($email);
     }
 }
 
