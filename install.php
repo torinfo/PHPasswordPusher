@@ -46,7 +46,7 @@ try{
   $db->exec('CREATE TABLE ' . $tblname . ' (seccred TEXT, id VARCHAR(128) NOT NULL PRIMARY KEY, ctime DATETIME, xtime DATETIME, views INT, xviews INT);') ;
   $db->exec('CREATE EVENT ' . $tblname . '_tidy ON SCHEDULE EVERY 1 MINUTE DO DELETE FROM ' . $dbname . '.' . $tblname . ' WHERE xtime<UTC_TIMESTAMP() OR views>=xviews;');
   $db->exec('SET GLOBAL event_scheduler = 1;');
-  $db->exec('GRANT ALL PRIVILEGES ON ' . $dbname . '.* TO \'' . $dbuser . '\'@\'localhost\' IDENTIFIED BY \'' . $dbpass . '\';') ;
+  $db->exec('GRANT ALL PRIVILEGES ON ' . $dbname . '.* TO \'' . $dbuser . '\'@\'' . $host . '\';') ;
   $db->exec('FLUSH PRIVILEGES;');
   echo "MySQL setup is successful!\n";
 } catch (PDOException $e) {
