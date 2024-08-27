@@ -22,8 +22,16 @@ function mailURL($url, $destEmail, $destName, $expirationTime, $expirationViews)
     $sender = 'phpw' . '@' . $assumedDomain;
     if (!empty($_SERVER['PHP_AUTH_USER']) && $enableSender == 1) {
         $sender = $_SERVER['PHP_AUTH_USER'] . '@' . $assumedDomain; 
-    } 
-    
+    }
+    if ($requireSaml2Auth && isset($_SESSION['saml2session']) && isset($_SESSION['saml2session']->email) && $enableSender == 1) {
+        $sender = $_SESSION['saml2session']->email;
+        $sendername = $sender;
+        if (isset($_SESSION['saml2session']->name)) {
+            $sender = $_SESSION['saml2session']->name . ' <' . $sender . '>';
+            $sendername = $_SESSION['saml2session']->name;
+        }
+    }
+
     //Assemble the message
     $message = $destName . ",\r\n\r\n" . translate('emailWarn') . ' ' . $expirationTime . ' / ' .
         $expirationViews . ' ' . translate('views') . "\r\n" .$url . "\r\n\r\n" .  
@@ -36,7 +44,7 @@ function mailURL($url, $destEmail, $destName, $expirationTime, $expirationViews)
         $message .= "\r\n" . $_SERVER['PHP_AUTH_NAME'];
         $subject .= $_SERVER['PHP_AUTH_NAME'];
     } else {
-        $subject .= $sender;
+        $subject .= $sendername;
     }
     
 

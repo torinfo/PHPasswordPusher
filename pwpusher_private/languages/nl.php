@@ -2,7 +2,7 @@
 /**
  * Translation Definitions
  *
- * Language: English
+ * Language: Nederlands
  */
 
 $aboutNavLink = 'Over';
@@ -40,7 +40,7 @@ $recipientNameTooltip = 'De naam van de persoon waar de informatie naar toe verz
 $secret = 'Geheim';
 $secretTooltip = 'Dit is de gevoelige informatie die verzonden moet worden.';
 $sender = 'Verzender';
-$sentCredential = 'Credential from';
+$sentCredential = 'Toegangsgegevens verzonden door';
 $sharedCredential = 'Het gedeelde wachtwoord:';
 $userNotAuthenticated = 'User not authenticated!';
 $validEmail = 'Email adres is niet geldig!';
@@ -48,4 +48,5 @@ $validName = 'Naam van de ontvanger is niet geldig!';
 $validTimeLimit = 'De tijdlimiet is groter dan het toegestane maximum';
 $validViewLimit = 'Geef een geldig aantal toegestane views!';
 $views = 'views';
-$viewsTooltip = 'Het maixmaal aantal toegstane eren dat de link geopend kan worden voordat de informatie automatisch wordt verwijderd.';
+$viewsTooltip = 'Het maximaal aantal toegstane eren dat de link geopend kan worden voordat de informatie automatisch wordt verwijderd.';
+$submitButton = 'Verstuur';

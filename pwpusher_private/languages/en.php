@@ -52,3 +52,4 @@ $validTimeLimit = 'Please enter a time limit smaller than the maximum';
 $validViewLimit = 'Please enter a valid view limit (positive whole number)!';
 $views = 'views';
 $viewsTooltip = 'The maximum number of times the link can be viewed before it is automatically deleted.';
+$submitButton = 'Submit';

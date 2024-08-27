@@ -48,3 +48,4 @@ $validTimeLimit = 'Necesita un tiempo menos que el máximo';
 $validViewLimit = 'Necesita un límite visión válido.';
 $views = 'visitas';
 $viewsTooltip = 'El visionados máximos para retener el secreto.';
+$submitButton = 'Enviar';

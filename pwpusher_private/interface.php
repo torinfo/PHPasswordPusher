@@ -153,16 +153,20 @@ function getFormElements()
         '<form action="' . $_SERVER['PHP_SELF'] . '" method="post">';
     
      //Display creator username if email and authentication are configured.
-    if ($enableEmail && ($requireApacheAuth || $requireCASAuth)) {
-        $returnString .= '<label class="control-label" for="destemail">' . translate('sender') . ': '; 
-        if(isset($_SERVER['PHP_AUTH_NAME'])) {
-            $returnString .= $_SERVER['PHP_AUTH_NAME'];
+    if ($enableEmail && ($requireApacheAuth || $requireCASAuth || $requireSaml2Auth)) {
+        $returnString .= '<label class="control-label" for="destemail">' . translate('sender') . ': ';
+        if ($requireSaml2Auth) {
+            $returnString .= $_SESSION['saml2session']->name;
         } else {
-            $returnString .= $_SERVER['PHP_AUTH_USER']; 
+            if (isset($_SERVER['PHP_AUTH_NAME'])) {
+                $returnString .= $_SERVER['PHP_AUTH_NAME'];
+            } else {
+                $returnString .= $_SERVER['PHP_AUTH_USER'];
+            }
         }
         $returnString .= '</label>';
     }
-    
+
     //Create the basic credential creation form
     $returnString .=
              translate('introduction') . '<br />
@@ -179,7 +183,7 @@ function getFormElements()
                   title="' . translate('timeTooltip') . '">
                   </span>
                   <input class="form-control" type="text" placeholder="' .
-                      $expirationTimeDefault . 
+                      $expirationTimeDefault .
                       '" name="time" aria-label="time" />
                   <div class="input-group-btn">
                     <select class="form-control" name="units">
@@ -212,10 +216,10 @@ function getFormElements()
                     type="text" 
                     placeholder="' . translate('recipientNamePlaceholder') . '" 
                     name="destname" />
-                </div>
+                
               </div>
               <div class="input-group">
-                <span class="input-group-addon icon-envelope" data-toggle="tooltip" data-placement="top"
+                <span class="input-group-addon icon-mail" data-toggle="tooltip" data-placement="top"
                   title="' . translate('recipientEmailTooltip') . '">
                 </span>
                 <input
@@ -223,14 +227,14 @@ function getFormElements()
                     type="text" 
                     placeholder="' . translate('recipientEmailPlaceholder') . '" 
                     name="destemail" />
-                </div>
+                
               </div>
         ';
     }
     
     //Add the submit button
     $returnString .= '<input class="btn btn-primary btn-large" ' . 
-        'type="submit" value="Submit" /></form></div>';
+        'type="submit" value="' . translate('submitButton') . '" /></form></div>';
     
     return $returnString;
 }
