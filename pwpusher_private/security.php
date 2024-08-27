@@ -59,7 +59,7 @@ function decryptCred($encoded)
     
     $ivLength = strlen(bin2hex(random_bytes(openssl_cipher_iv_length($cipher))));
 
-    $decodedCred = base64_decode($ciphertext);
+    $decodedCred = base64_decode($encoded);
     $iv = substr($decodedCred, 0, $ivLength);
     $tag = substr($decodedCred, $ivLength, $tagLength);
     $decodedCT = substr($decodedCred, $ivLength + $tagLength);
