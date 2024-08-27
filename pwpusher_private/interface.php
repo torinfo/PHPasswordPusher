@@ -38,6 +38,12 @@ function getHeader()
           .input-group {
             margin-bottom: 13px;
           }
+          
+          #name {
+            padding-left: 10px;
+            font-size: x-large;
+          }
+          
         </style>
 
         <link rel="stylesheet" type="text/css" href="fontello/css/fontello.css" />
@@ -127,8 +133,8 @@ function getNavBar()
                         </div>
                       </nav>
                       <div class="container">
-                      <img class="img-responsive center-block" style="height:50px;"
-                          src="' . $logo . '" alt="logo"/>';
+                      <img id="logo" class="img-responsive center-block" style="height:50px;"
+                          src="' . $logo . '" alt="logo"/>' . '<span id="name">' . (isset($_SESSION['saml2session']) && isset($_SESSION['saml2session']->name) ? $_SESSION['saml2session']->name : '') . '</span>';
                       
     return $returnString;
 }

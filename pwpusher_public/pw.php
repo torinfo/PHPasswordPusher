@@ -11,7 +11,10 @@ require '../pwpusher_private/mail.php';
 require '../pwpusher_private/security.php';
 require '../pwpusher_private/input.php';
 require '../pwpusher_private/interface.php';
-require '../pwpusher_private/CAS/CAS.php';
+
+if ($requireSaml2Auth) {
+    session_start();
+}
 
 //Print the header
 print getHeader();
@@ -41,6 +44,10 @@ if ($arguments['func'] == 'none' || $arguments == false) {
 
     //Force CAS Authentication in order to load the form
     if ($requireCASAuth) {
+
+        require_once(dirname(__FILE__) . '/library/autoloader.php');
+        $authmech = Factory::create('Saml2');
+
         phpCAS::forceAuthentication();
         $_SERVER['PHP_AUTH_USER'] = phpCAS::getUser();
 
@@ -59,6 +66,12 @@ if ($arguments['func'] == 'none' || $arguments == false) {
         /** @noinspection PhpToStringImplementationInspection */
         print getFooter();
         die();
+    } elseif ($requireSaml2Auth) {
+        if (empty($_SESSION['saml2_session'])) {
+            require_once(dirname(__FILE__) . '/library/autoloader.php');
+            $authmech = Authentication_Factory::create('Saml2');
+            $authmech->needsLogin();
+        }
     }
 
     //Get form elements
