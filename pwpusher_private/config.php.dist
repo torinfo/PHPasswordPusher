@@ -7,7 +7,7 @@
  
 //MySQL and Apache configuration:
     //Change this if the host is on a different server
-    $host = 'localhost';
+    $host = '127.0.0.1';
 
     //The MySQL database name.
     $dbname = 'phpwpush';
@@ -16,18 +16,18 @@
     $tblname = "phpasspush";
     
     //The MySQL user
-    $dbuser = 'phpw';  
+    $dbuser = 'phppwpush';
     
     //The MySQL user's password. Change this value to something secure!
-    $dbpass = 'phpass!3#.';
+    $dbpass = 'phpwpushdbpw';
         
 //Encryption and security:
     //The encryption key. It must be of length 16, 24, or 32 in order to use AES-128, AES-192, or AES-256, respectively.
     //If the key is not of the proper length, the application will fail to run.
-    $key = 'changethiseddnc7o6gmhlz6df48z14z';
+    $key = '0879e6f472bbca9a';
     
     //The salt for the link hash. Change it to something else secret.
-    $salt = 'change this salt please!';
+    $salt = 'ChangedSalt!';
     
     // The OpenSSL cypher to use for encrypting and decrypting credentials.
     $cipher = 'aes-128-gcm';
@@ -45,7 +45,10 @@
     $casPort = 443;
     $casServerCaCertPath = '/physical/path/to/cachain.pem'; //Contains the Certificate Authority (issuer) certificate.
     $casSamlNameAttribute = 'full_name'; //A SAML attribute that contains the full name of the user.
-    
+
+    //Require Saml2 login
+    $requireSaml2Auth = true;
+
     //Protect credential retrieval as well (if set to false and using authentication, 
     //only authenticated users can create credentials, but anyone can retrieve).
     $protectRetrieve = true;
@@ -82,7 +85,7 @@
     $title = 'PHPassword Pusher';
     
     //Site Language (corresponds to $language.php)
-    $language = 'en'; 
+    $language = 'nl';
     
     //Enable display of the URL to the user.
     $displayURL = true;  
@@ -100,3 +103,6 @@
     //Critical warning displayed on every page and email.
     $criticalWarning = 'Please, NEVER leave credentials where they can be easily ' .
         'accessed by others.';
+
+    global $site_url;
+    $site_url = "https://dev.tor.nl/~tom/pwpush/pwpusher_public/";
